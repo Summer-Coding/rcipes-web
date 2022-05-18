@@ -7,6 +7,7 @@ import './login.css';
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
+  password: yup.string(),
 });
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
       <CardHeader>Login</CardHeader>
       <CardBody>
         <Formik
-          initialValues={{ email: '' }}
+          initialValues={{ email: '', password: '' }}
           validationSchema={schema}
           // eslint-disable-next-line no-console
           onSubmit={(values) => console.log(values)}
