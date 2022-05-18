@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ErrorMessage, Field } from 'formik';
 import { FormFeedback, FormGroup } from 'reactstrap';
 import { FormLabel } from '../shared';
 import FormInputWrapper from './FormInputWrapper';
+import FormInput from './FormInput';
 import './form-field.css';
-import { ErrorMessage } from 'formik';
 
 const colSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
 
@@ -78,11 +79,14 @@ const FormField = ({
       >
         {name}
       </FormLabel>
-      <FormInputWrapper
-        append={append}
-        inputProps={inputProps}
-        prepend={prepend}
-      />
+      <FormInputWrapper append={append} prepend={prepend}>
+        <Field
+          name={name}
+          type={type}
+          component={FormInput}
+          props={inputProps}
+        />
+      </FormInputWrapper>
       <ErrorMessage component={FormFeedback} name={name} />
     </FormGroup>
   );
