@@ -1,18 +1,38 @@
 module.exports = {
   env: {
-    commonjs: true,
     es6: true,
-    node: true,
+    browser: true,
+    jest: true,
   },
   parserOptions: {
-    project: 'tsconfig.json',
     tsconfigRootDir: __dirname,
     sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
+  plugins: ['react'],
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:prettier/recommended',
   ],
+  ignorePatterns: ['.eslintrc.js'],
   root: true,
+  rules: {
+    'react/jsx-uses-react': 'error',
+    'react/jsx-uses-vars': 'error',
+    'no-console': 'warn',
+    'no-eval': 'error',
+    'react/no-danger': 'error',
+    'react/prefer-es6-class': 'warn',
+    'react/jsx-pascal-case': 'error',
+    'react/function-component-definition': [
+      2,
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function',
+      },
+    ],
+  },
 };
