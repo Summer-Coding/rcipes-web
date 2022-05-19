@@ -10,7 +10,6 @@ const FormLabel = ({
   disabled,
   hidden,
   inputId,
-  labelCol,
   required,
   size,
 }) => (
@@ -22,7 +21,6 @@ const FormLabel = ({
     id={`${inputId}-label`}
     required={required}
     size={size}
-    {...labelCol}
     {...attributes}
   >
     {children}
@@ -36,7 +34,6 @@ FormLabel.propTypes = {
   disabled: PropTypes.bool,
   hidden: PropTypes.bool,
   inputId: PropTypes.string.isRequired,
-  labelCol: PropTypes.object,
   required: PropTypes.bool.isRequired,
   size: PropTypes.string,
 };

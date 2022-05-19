@@ -12,7 +12,6 @@ const colSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
 const FormField = ({
   append,
   disabled,
-  grid,
   groupAttributes,
   helpMessage,
   inline,
@@ -31,8 +30,6 @@ const FormField = ({
 }) => {
   let row = false;
   const inputId = name;
-  const col = {};
-  const labelCol = {};
 
   const inputProps = {
     attributes: inputAttributes,
@@ -46,18 +43,6 @@ const FormField = ({
     size,
     type,
   };
-
-  if (grid) {
-    for (const colSize of colSizes) {
-      if (grid[colSize]) {
-        // eslint-disable-next-line no-unused-vars
-        row = true;
-        const sizeNum = Number.parseInt(grid[colSize], 10);
-        col[colSize] = sizeNum;
-        labelCol[colSize] = 12 - sizeNum;
-      }
-    }
-  }
 
   return (
     <FormGroup
@@ -73,7 +58,6 @@ const FormField = ({
         disabled={disabled}
         hidden={labelHidden}
         inputId={`${inputId}-label`}
-        labelCol={labelCol}
         required={required}
         size={size}
       >
@@ -96,7 +80,6 @@ FormField.propTypes = {
   append: PropTypes.node,
   children: PropTypes.func,
   disabled: PropTypes.bool,
-  grid: PropTypes.object,
   groupAttributes: PropTypes.object,
   helpMessage: PropTypes.node,
   inline: PropTypes.bool,

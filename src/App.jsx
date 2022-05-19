@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import Layout from './components/layout/Layout';
-import Login from './components/login';
+import Layout from './components/Layout/Layout';
+import Login from './components/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => (
