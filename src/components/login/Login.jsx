@@ -1,8 +1,16 @@
-import { Form, Formik } from 'formik';
-import React from 'react';
-import { Button, Card, CardBody, CardHeader, Container } from 'reactstrap';
+import React, { useState } from 'react';
 import * as yup from 'yup';
+import { Form, Formik } from 'formik';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Container,
+  Spinner,
+} from 'reactstrap';
 import FormField from '../Form/Field';
+import { supabase } from '../../lib/supabaseClient.ts';
 import './login.css';
 
 const schema = yup.object().shape({
@@ -11,30 +19,60 @@ const schema = yup.object().shape({
 });
 
 const Login = () => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const login = async (email) => {
+    setIsProcessing(true);
+    await supabase.auth.signIn({ email });
+    setIsSubmitted(true);
+    setIsProcessing(false);
+  };
+
   return (
-    <Card>
-      <CardHeader tag="h3">
-        <span className="ms-3">Login</span>
-      </CardHeader>
-      <CardBody>
-        <Container>
-          <Formik
-            initialValues={{ email: '', password: '' }}
-            validationSchema={schema}
-            // eslint-disable-next-line no-console
-            onSubmit={(values) => console.log(values)}
-          >
-            <Form>
-              <FormField name="email" required />
-              <FormField name="password" type="password" />
-              <Button type="submit" color="success">
-                Submit
-              </Button>
-            </Form>
-          </Formik>
-        </Container>
-      </CardBody>
-    </Card>
+    <>
+      {isSubmitted ? (
+        <div>Check your email to confirm login.</div>
+      ) : (
+        <Card>
+          <CardHeader tag="h3">
+            <span className="ms-3">Login</span>
+          </CardHeader>
+          <CardBody>
+            <Container>
+              <Formik
+                initialValues={{ email: '', password: '' }}
+                validationSchema={schema}
+                // eslint-disable-next-line no-console
+                onSubmit={async (values) => {
+                  await login(values.email);
+                }}
+              >
+                <Form>
+                  <FormField name="email" required />
+                  <Button
+                    type="submit"
+                    color="success"
+                    disabled={isSubmitted || isProcessing}
+                  >
+                    {isProcessing ? <>Loading...</> : <>Send magic link</>}
+                    {isProcessing && (
+                      <Spinner
+                        style={{
+                          marginLeft: '0.5rem',
+                        }}
+                        color="light"
+                        size="sm"
+                      />
+                    )}
+                  </Button>
+                </Form>
+              </Formik>
+            </Container>
+          </CardBody>
+        </Card>
+      )}
+    </>
   );
 };
 
