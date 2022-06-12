@@ -4,10 +4,10 @@ import { Navbar } from '../Navbar';
 import { Container } from 'reactstrap';
 import './layout.css';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, session }) => {
   return (
     <>
-      <Navbar />
+      <Navbar session={session} />
       <section className="content">
         <Container>{children}</Container>
       </section>
@@ -17,6 +17,7 @@ const Layout = ({ children }) => {
 
 Layout.propTypes = {
   children: PropTypes.any.isRequired,
+  session: PropTypes.object.isRequired,
 };
 
 export default Layout;

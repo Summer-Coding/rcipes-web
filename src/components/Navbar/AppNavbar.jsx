@@ -8,8 +8,9 @@ import {
   NavItem,
   NavLink,
 } from 'reactstrap';
+import PropTypes from 'prop-types';
 
-const AppNavbar = () => {
+const AppNavbar = ({ session }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -18,13 +19,22 @@ const AppNavbar = () => {
       <NavbarToggler onClick={() => setIsOpen(!isOpen)} />
       <Collapse isOpen={isOpen} navbar>
         <Nav className="ms-auto" navbar>
+          {session && <NavLink href="/profile">Profile</NavLink>}
           <NavItem>
-            <NavLink href="/login">Login</NavLink>
+            {session ? (
+              <NavLink href="/logout">Logout</NavLink>
+            ) : (
+              <NavLink href="/login">Login</NavLink>
+            )}
           </NavItem>
         </Nav>
       </Collapse>
     </Navbar>
   );
+};
+
+AppNavbar.propTypes = {
+  session: PropTypes.object.isRequired,
 };
 
 export default AppNavbar;
