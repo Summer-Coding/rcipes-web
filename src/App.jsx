@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import './App.css';
 import ProtectedRoute from './components/ProtectedRoute';
-import Layout from './components/Layout/Layout';
+import Layout from './components/Layout';
 import Login from './components/Login';
 import Home from './components/Home';
-import Profile from './components/Profile/Profile';
+import Profile from './components/Profile';
+import Users from './components/Admin/Users';
 import { supabase } from './lib/supabaseClient.ts';
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
@@ -24,17 +25,39 @@ const App = () => {
     <>
       <Layout session={session}>
         <Routes>
+          {/* Unrestricted Routes */}
           <Route path="/login" element={<Login />} />
+
+          {/* Restricted Routes */}
           <Route
             element={
               <ProtectedRoute session={session} redirectRoute="/login" />
             }
           >
-            {session && session.user && (
-              <Route
-                path="/profile"
-                element={<Profile user={session.user} />}
+            {session && (
+              <>
+                <Route
+                  path="/profile"
+                  element={<Profile user={session.user} />}
+                />
+              </>
+            )}
+          </Route>
+
+          {/* Admin routes */}
+          <Route
+            element={
+              <ProtectedRoute
+                session={session}
+                redirectRoute="/"
+                requiredRole="admin"
               />
+            }
+          >
+            {session && (
+              <>
+                <Route path="/admin/users" element={<Users />} />
+              </>
             )}
           </Route>
           <Route exact path="/" element={<Home />} />

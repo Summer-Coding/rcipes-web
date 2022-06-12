@@ -17,7 +17,7 @@ const Layout = ({ children, session }) => {
 
 Layout.propTypes = {
   children: PropTypes.any.isRequired,
-  session: PropTypes.object.isRequired,
+  session: PropTypes.object,
 };
 
 export default Layout;

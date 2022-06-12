@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   Collapse,
   Navbar,
@@ -9,9 +9,14 @@ import {
   NavLink,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
+import { isAdmin } from '../../lib/sessionUtils.ts';
 
 const AppNavbar = ({ session }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const userIsAdmin = useMemo(() => {
+    return isAdmin(session);
+  }, [session]);
 
   return (
     <Navbar color="light" light expand="md" container="md">
@@ -19,7 +24,16 @@ const AppNavbar = ({ session }) => {
       <NavbarToggler onClick={() => setIsOpen(!isOpen)} />
       <Collapse isOpen={isOpen} navbar>
         <Nav className="ms-auto" navbar>
-          {session && <NavLink href="/profile">Profile</NavLink>}
+          {session && userIsAdmin && (
+            <NavItem>
+              <NavLink href="/admin/users">Users</NavLink>
+            </NavItem>
+          )}
+          {session && (
+            <NavItem>
+              <NavLink href="/profile">Profile</NavLink>
+            </NavItem>
+          )}
           <NavItem>
             {session ? (
               <NavLink href="/logout">Logout</NavLink>
@@ -34,7 +48,7 @@ const AppNavbar = ({ session }) => {
 };
 
 AppNavbar.propTypes = {
-  session: PropTypes.object.isRequired,
+  session: PropTypes.object,
 };
 
 export default AppNavbar;
