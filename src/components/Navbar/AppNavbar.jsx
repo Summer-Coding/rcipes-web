@@ -9,7 +9,7 @@ import {
   NavLink,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
-import { isAdmin } from '../../lib/sessionUtils.ts';
+import { isAdmin } from '../../lib/sessionUtils.js';
 
 const AppNavbar = ({ session }) => {
   const [isOpen, setIsOpen] = useState(false);

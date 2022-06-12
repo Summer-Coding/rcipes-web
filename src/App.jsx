@@ -9,6 +9,7 @@ import Users from './components/Admin/Users';
 import { supabase } from './lib/supabaseClient.ts';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const [session, setSession] = useState(null);
@@ -16,7 +17,7 @@ const App = () => {
   useEffect(() => {
     setSession(supabase.auth.session());
 
-    supabase.auth.onAuthStateChange((_event, session) => {
+    supabase.auth.onAuthStateChange((_, session) => {
       setSession(session);
     });
   }, []);

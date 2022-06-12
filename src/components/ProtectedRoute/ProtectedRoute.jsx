@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { userHasRole } from '../../lib/sessionUtils.ts';
+import { userHasRole } from '../../lib/sessionUtils.js';
 
 const isAllowed = (session, requiredRole = '') => {
   if (!session) {
