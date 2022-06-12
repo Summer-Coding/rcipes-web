@@ -7,9 +7,14 @@ import {
   Nav,
   NavItem,
   NavLink,
+  DropdownToggle,
+  UncontrolledDropdown,
+  DropdownMenu,
+  DropdownItem,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { isAdmin } from '../../lib/sessionUtils.js';
+import { supabase } from '../../lib/supabaseClient.ts';
 
 const AppNavbar = ({ session }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +23,10 @@ const AppNavbar = ({ session }) => {
     return isAdmin(session);
   }, [session]);
 
+  const logout = () => {
+    supabase.auth.signOut();
+  };
+
   return (
     <Navbar color="light" light expand="md" container="md">
       <NavbarBrand href="/">reactstrap</NavbarBrand>
@@ -25,9 +34,19 @@ const AppNavbar = ({ session }) => {
       <Collapse isOpen={isOpen} navbar>
         <Nav className="ms-auto" navbar>
           {session && userIsAdmin && (
-            <NavItem>
-              <NavLink href="/admin/users">Users</NavLink>
-            </NavItem>
+            <UncontrolledDropdown inNavbar nav>
+              <DropdownToggle caret nav>
+                Admin
+              </DropdownToggle>
+              <DropdownMenu end>
+                <DropdownItem>
+                  <NavLink href="/admin/users">Users</NavLink>
+                </DropdownItem>
+                <DropdownItem>
+                  <NavLink href="/admin/password">Password</NavLink>
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
           )}
           {session && (
             <NavItem>
@@ -36,7 +55,9 @@ const AppNavbar = ({ session }) => {
           )}
           <NavItem>
             {session ? (
-              <NavLink href="/logout">Logout</NavLink>
+              <NavLink href="/login" onClick={logout}>
+                Logout
+              </NavLink>
             ) : (
               <NavLink href="/login">Login</NavLink>
             )}

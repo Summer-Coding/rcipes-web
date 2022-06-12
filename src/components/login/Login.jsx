@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import * as yup from 'yup';
 import { Form, Formik } from 'formik';
 import {
   Button,
@@ -9,13 +8,13 @@ import {
   Container,
   Spinner,
 } from 'reactstrap';
+import * as yup from 'yup';
 import FormField from '../Form/Field';
 import { supabase } from '../../lib/supabaseClient.ts';
 import './login.css';
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
-  password: yup.string(),
 });
 
 const Login = () => {
@@ -30,7 +29,7 @@ const Login = () => {
   };
 
   return (
-    <>
+    <section className="login">
       {isSubmitted ? (
         <div>Check your email to confirm login.</div>
       ) : (
@@ -41,29 +40,30 @@ const Login = () => {
           <CardBody>
             <Container>
               <Formik
-                initialValues={{ email: '', password: '' }}
+                initialValues={{ email: '' }}
                 validationSchema={schema}
-                // eslint-disable-next-line no-console
                 onSubmit={async (values) => {
                   await login(values.email);
                 }}
               >
                 <Form>
-                  <FormField name="email" required />
+                  <FormField name="email" disabled={isProcessing} required />
                   <Button
                     type="submit"
                     color="success"
                     disabled={isSubmitted || isProcessing}
                   >
-                    {isProcessing ? <>Loading...</> : <>Send magic link</>}
-                    {isProcessing && (
-                      <Spinner
-                        style={{
-                          marginLeft: '0.5rem',
-                        }}
-                        color="light"
-                        size="sm"
-                      />
+                    {isProcessing ? (
+                      <>
+                        <span>Loading...</span>
+                        <Spinner
+                          className="button-spinner"
+                          color="light"
+                          size="sm"
+                        />
+                      </>
+                    ) : (
+                      <>Send magic link</>
                     )}
                   </Button>
                 </Form>
@@ -72,7 +72,7 @@ const Login = () => {
           </CardBody>
         </Card>
       )}
-    </>
+    </section>
   );
 };
 

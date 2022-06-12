@@ -10,6 +10,7 @@ import { supabase } from './lib/supabaseClient.ts';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+import PasswordManager from './components/Admin/Password/PasswordManager';
 
 const App = () => {
   const [session, setSession] = useState(null);
@@ -58,6 +59,7 @@ const App = () => {
             {session && (
               <>
                 <Route path="/admin/users" element={<Users />} />
+                <Route path="/admin/password" element={<PasswordManager />} />
               </>
             )}
           </Route>

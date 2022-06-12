@@ -20,6 +20,7 @@ const FormField = ({
   labelAttributes,
   labelClass,
   labelHidden,
+  labelText,
   name,
   prepend,
   readOnly,
@@ -30,6 +31,7 @@ const FormField = ({
 }) => {
   let row = false;
   const inputId = name;
+  labelText = labelText ?? name;
 
   const inputProps = {
     attributes: inputAttributes,
@@ -61,7 +63,7 @@ const FormField = ({
         required={required}
         size={size}
       >
-        {name}
+        {labelText}
       </FormLabel>
       <FormInputWrapper append={append} prepend={prepend}>
         <Field
@@ -88,6 +90,7 @@ FormField.propTypes = {
   labelAttributes: PropTypes.object,
   labelClass: PropTypes.string,
   labelHidden: PropTypes.bool,
+  labelText: PropTypes.string,
   name: PropTypes.string.isRequired,
   prepend: PropTypes.node,
   readOnly: PropTypes.bool,
