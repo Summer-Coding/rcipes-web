@@ -81,8 +81,8 @@ const Users = () => {
                     {!(user.roles ?? []).includes('admin') && (
                       <Button
                         color="warning"
-                        onClick={() => handlePromoteToAdmin(user.id)}
-                        disabled={user.id === userProcessing}
+                        onClick={() => handlePromoteToAdmin(user.userId)}
+                        disabled={user.userId === userProcessing}
                       >
                         {user.id === userProcessing ? (
                           <>
