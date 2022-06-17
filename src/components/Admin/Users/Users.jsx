@@ -78,7 +78,9 @@ const Users = () => {
                     </ListGroupItemText>
                   </Col>
                   <Col className="d-flex align-items-center justify-content-end">
-                    {!(user.roles ?? []).includes('admin') && (
+                    {!(user.roles ?? [])
+                      .map((r) => r.toUpperCase())
+                      .includes('ADMIN') && (
                       <Button
                         color="warning"
                         onClick={() => handlePromoteToAdmin(user.userId)}
