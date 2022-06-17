@@ -106,6 +106,10 @@ const Profile = ({ user }) => {
           onSubmit={async (values) => {
             await handleSubmit(values);
           }}
+          onReset={async (_, { resetForm }) => {
+            resetForm();
+            await handleLoadData();
+          }}
         >
           <Form>
             <FormField name="username" disabled={isProcessing} required />
@@ -132,11 +136,10 @@ const Profile = ({ user }) => {
               )}
             </Button>
             <Button
-              type="button"
+              type="reset"
               color="warning"
               disabled={isProcessing}
               className="mx-3"
-              onClick={handleLoadData}
             >
               {isProcessing && processingButton === 'reset' ? (
                 <>
