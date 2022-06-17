@@ -63,8 +63,8 @@ const Users = () => {
         <Spinner className="page-spinner" />
       ) : (
         <>
-          {users ? (
-            (users ?? []).map((user) => (
+          {(users ?? []).length > 0 ? (
+            users.map((user) => (
               <ListGroupItem key={user.id} className="user-list-item">
                 <Row>
                   <Col sm={8}>
