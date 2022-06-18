@@ -11,12 +11,8 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ['react'],
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:prettier/recommended',
-  ],
+  plugins: ['react', 'prettier'],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
   ignorePatterns: ['.eslintrc.js'],
   root: true,
   rules: {
