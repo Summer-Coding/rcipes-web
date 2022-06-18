@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../supabaseClient.ts';
 
 const initialState = {
-  session: {
-    token: undefined,
-    refreshToken: undefined,
-    expiresIn: undefined,
-  },
+  isLoading: true,
+  isLoggedIn: false,
+  token: undefined,
+  refreshToken: undefined,
+  expiresIn: undefined,
 };
 
 export const sessionSlice = createSlice({
@@ -15,20 +15,20 @@ export const sessionSlice = createSlice({
   reducers: {
     setSession: (state) => {
       const session = supabase.auth.session();
-      state.session.token = session.access_token;
-      state.session.refreshToken = session.refresh_token;
-      state.session.expiresIn = session.expires_in;
-    },
-    refreshSession: async (state) => {
-      const { data: session } = await supabase.auth.refreshSession();
-      state.session.token = session.access_token;
-      state.session.refreshToken = session.refresh_token;
-      state.session.expiresIn = session.expires_in;
+      if (session) {
+        const { access_token, refresh_token, expires_in } = session;
+        state.token = access_token;
+        state.refreshToken = refresh_token;
+        state.expiresIn = expires_in;
+        state.isLoggedIn = true;
+      } else {
+        state.isLoggedIn = false;
+      }
+
+      state.isLoading = false;
     },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { setSession, refreshSession } = sessionSlice.actions;
-
+export const { setSession } = sessionSlice.actions;
 export default sessionSlice.reducer;

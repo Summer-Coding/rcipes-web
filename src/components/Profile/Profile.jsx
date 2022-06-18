@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { Form, Formik } from 'formik';
 import { Button, Spinner } from 'reactstrap';
 import FormField from '../Form/Field';
@@ -15,7 +15,8 @@ const schema = yup.object().shape({
   lastName: yup.string().required(),
 });
 
-const Profile = ({ user }) => {
+const Profile = () => {
+  const { email } = useSelector((state) => state.user);
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -92,7 +93,7 @@ const Profile = ({ user }) => {
   return (
     <>
       <h1>Profile</h1>
-      <p>Email: {user.email}</p>
+      <p>Email: {email}</p>
       {isLoading ? (
         <Spinner className="page-spinner" />
       ) : (
@@ -171,10 +172,6 @@ const Profile = ({ user }) => {
       {isModalOpen && <ProfileDeleteModal handleDelete={handleDelete} />}
     </>
   );
-};
-
-Profile.propTypes = {
-  user: PropTypes.object.isRequired,
 };
 
 export default Profile;

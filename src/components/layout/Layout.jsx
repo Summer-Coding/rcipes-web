@@ -5,10 +5,10 @@ import { Container } from 'reactstrap';
 import { ToastContainer } from 'react-toastify';
 import './layout.css';
 
-const Layout = ({ children, session }) => {
+const Layout = ({ children }) => {
   return (
     <>
-      <Navbar session={session} />
+      <Navbar />
       <section className="content">
         <Container>{children}</Container>
       </section>
@@ -29,7 +29,6 @@ const Layout = ({ children, session }) => {
 
 Layout.propTypes = {
   children: PropTypes.any.isRequired,
-  session: PropTypes.object,
 };
 
 export default Layout;

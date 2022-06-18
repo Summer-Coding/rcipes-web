@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Collapse,
   Navbar,
@@ -12,16 +13,16 @@ import {
   DropdownMenu,
   DropdownItem,
 } from 'reactstrap';
-import PropTypes from 'prop-types';
 import { isAdmin } from '../../lib/sessionUtils.js';
 import { supabase } from '../../lib/supabaseClient.ts';
 
-const AppNavbar = ({ session }) => {
+const AppNavbar = () => {
+  const user = useSelector((state) => state.user);
   const [isOpen, setIsOpen] = useState(false);
 
   const userIsAdmin = useMemo(() => {
-    return isAdmin(session);
-  }, [session]);
+    return isAdmin(user);
+  }, [user]);
 
   const logout = () => {
     supabase.auth.signOut();
@@ -29,11 +30,11 @@ const AppNavbar = ({ session }) => {
 
   return (
     <Navbar color="light" light expand="md" container="md">
-      <NavbarBrand href="/">reactstrap</NavbarBrand>
+      <NavbarBrand href="/">Recipes</NavbarBrand>
       <NavbarToggler onClick={() => setIsOpen(!isOpen)} />
       <Collapse isOpen={isOpen} navbar>
         <Nav className="ms-auto" navbar>
-          {session && userIsAdmin && (
+          {!user.isLoading && userIsAdmin && (
             <UncontrolledDropdown inNavbar nav>
               <DropdownToggle caret nav>
                 Admin
@@ -48,13 +49,13 @@ const AppNavbar = ({ session }) => {
               </DropdownMenu>
             </UncontrolledDropdown>
           )}
-          {session && (
+          {!user.isLoading && user.isLoggedIn && (
             <NavItem>
               <NavLink href="/profile">Profile</NavLink>
             </NavItem>
           )}
           <NavItem>
-            {session ? (
+            {!user.isLoading && user.isLoggedIn ? (
               <NavLink href="/login" onClick={logout}>
                 Logout
               </NavLink>
@@ -66,10 +67,6 @@ const AppNavbar = ({ session }) => {
       </Collapse>
     </Navbar>
   );
-};
-
-AppNavbar.propTypes = {
-  session: PropTypes.object,
 };
 
 export default AppNavbar;

@@ -1,12 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { Session } from '@supabase/supabase-js';
 
-export const isAdmin = (session) => {
-  return userHasRole(session, 'ADMIN');
+export const isAdmin = (user) => {
+  return userHasRole(user, 'ADMIN');
 };
 
-export const userHasRole = (session, role) => {
-  return (session?.user?.user_metadata?.roles ?? [])
-    .map((r) => r.toUpperCase())
-    .includes(role.toUpperCase());
+export const userHasRole = (user, role) => {
+  return (user?.roles ?? []).includes(role.toUpperCase());
 };
