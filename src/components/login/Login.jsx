@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Form, Formik } from 'formik';
 import {
   Button,
@@ -12,20 +13,47 @@ import * as yup from 'yup';
 import FormField from '../Form/Field';
 import { supabase } from '../../lib/supabaseClient.ts';
 import './login.css';
+import { toast } from 'react-toastify';
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
 });
 
+// eslint-disable-next-line no-undef
+const baseUrl = process.env.REACT_APP_API_URL;
+
 const Login = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const login = async (email) => {
+  const login = async (email, secondAttempt = false) => {
     setIsProcessing(true);
-    await supabase.auth.signIn({ email });
+    const { error } = await supabase.auth.signIn(
+      { email },
+      {
+        shouldCreateUser: false,
+      },
+    );
+
+    if (error) {
+      if (!secondAttempt && error?.message === 'Signups not allowed for otp') {
+        try {
+          await axios.post(`${baseUrl}/auth/sign-up`, {
+            email,
+          });
+          await login(email, true);
+          return;
+        } catch {
+          toast.error('Could not sign up user');
+        } finally {
+          setIsProcessing(false);
+        }
+      } else {
+        toast.error('Could not sign up user');
+        setIsProcessing(false);
+      }
+    }
     setIsSubmitted(true);
-    setIsProcessing(false);
   };
 
   return (
