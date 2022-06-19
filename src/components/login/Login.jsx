@@ -42,18 +42,15 @@ const Login = () => {
             email,
           });
           await login(email, true);
-          return;
+          setIsSubmitted(true);
         } catch {
           toast.error('Could not sign up user');
-        } finally {
-          setIsProcessing(false);
         }
       } else {
         toast.error('Could not sign up user');
-        setIsProcessing(false);
       }
     }
-    setIsSubmitted(true);
+    setIsProcessing(false);
   };
 
   return (
