@@ -7,7 +7,11 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
+      - node/install:
+          install-yarn: true
       - node/install-yarn
+      - node/install-packages:
+          pkg-manager: yarn
 workflows:
   build:
     jobs:
