@@ -5,7 +5,6 @@ orbs:
 jobs:
   build:
     docker:
-      # replace with your preferred image
       - image: cimg/base:stable
     steps:
       - node/install-yarn
