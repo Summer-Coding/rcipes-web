@@ -9,9 +9,9 @@ jobs:
     steps:
       - node/install:
           install-yarn: true
-      - node/install-yarn
       - node/install-packages:
           pkg-manager: yarn
+          app-dir: .
 workflows:
   build:
     jobs:
