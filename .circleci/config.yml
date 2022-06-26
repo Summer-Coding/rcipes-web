@@ -11,7 +11,8 @@ jobs:
           install-yarn: true
       - node/install-packages:
           pkg-manager: yarn
-          app-dir: .
+          check-cache: detect
+
 workflows:
   build:
     jobs:
