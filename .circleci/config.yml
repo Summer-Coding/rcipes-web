@@ -14,10 +14,10 @@ jobs:
           pkg-manager: yarn
           check-cache: detect
       - run:
-        name: Yarn Build
-        command: yarn build
-        environment:
-          CI: false
+          name: Yarn Build
+          command: yarn build
+          environment:
+            CI: false
 
 workflows:
   build:
