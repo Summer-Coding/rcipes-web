@@ -14,10 +14,11 @@ jobs:
           pkg-manager: yarn
           check-cache: detect
       - run:
-          name: Yarn Build
-          command: yarn build
-          environment:
-            CI: false
+          name: Set CI to false
+          command: |
+            echo 'export CI=false' >> $BASH_ENV
+            source $BASH_ENV
+      -run: yarn build
 
 workflows:
   build:
