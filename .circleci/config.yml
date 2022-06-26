@@ -1,24 +1,17 @@
 version: 2.1
 orbs:
-  node: circleci/node@5.0.2
+  docker: circleci/docker@1.7.0
 
-dependencies:
-  override:
-    - yarn install
-
-commands:
-  run-yarn-install:
+jobs:
+  example-job:
+    docker:
+      # replace with your preferred image
+      - image: cimg/base:stable
     steps:
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - node-deps-{{ arch }}-v1-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install dependencies
-          command: yarn install --prefer-offline --frozen-lockfile --non-interactive --cache-folder ~/.cache/yarn
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: node-deps-{{ arch }}-v1-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
-            - ~/.cache/yarn
+      - docker/build:
+          image: recipes-web
+
+workflows:
+  example-workflow:
+    jobs:
+      - example-job
