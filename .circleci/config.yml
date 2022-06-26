@@ -3,25 +3,26 @@ orbs:
   node: circleci/node@5.0.2
 
 jobs:
-  build:
+  pipeline:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:16.15.1
+    working_directory: ~/recipes-web
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
       - node/install-packages:
-          pkg-manager: yarn
           check-cache: detect
-      - run: yarn lint
+          pkg-manager: yarn
       - run:
-          name: Set CI to false
+          name: Lint
+          command: yarn lint
+      - run:
+          name: Build modules
           command: |
             echo 'export CI=false' >> $BASH_ENV
             source $BASH_ENV
-      - run: yarn build
+            yarn build
 
 workflows:
   build:
     jobs:
-      - build
+      - pipeline
