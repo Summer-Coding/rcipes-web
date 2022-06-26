@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
-import Layout from './components/layout';
+import Layout from './components/Layout';
 import Login from './components/Login';
 import Home from './components/Home';
 import PasswordManager from './components/Admin/Password/PasswordManager';
