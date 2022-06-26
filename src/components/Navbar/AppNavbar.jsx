@@ -41,7 +41,7 @@ const AppNavbar = () => {
               </DropdownToggle>
               <DropdownMenu end>
                 <DropdownItem>
-                  <NavLink href="/admin/users">Users</NavLink>
+                  <NavLink href="/admin/users">User</NavLink>
                 </DropdownItem>
                 <DropdownItem>
                   <NavLink href="/admin/password">Password</NavLink>
