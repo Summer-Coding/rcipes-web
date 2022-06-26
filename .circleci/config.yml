@@ -1,17 +1,15 @@
 version: 2.1
 orbs:
-  docker: circleci/docker@1.7.0
+  node: circleci/node@5.0.2
 
 jobs:
-  example-job:
+  build:
     docker:
       # replace with your preferred image
       - image: cimg/base:stable
     steps:
-      - docker/build:
-          image: recipes-web
-
+      - node/install-yarn
 workflows:
-  example-workflow:
+  build:
     jobs:
-      - example-job
+      - build
