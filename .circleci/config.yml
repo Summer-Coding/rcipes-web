@@ -23,6 +23,6 @@ jobs:
             yarn build
 
 workflows:
-  build:
+  pipeline:
     jobs:
       - pipeline
