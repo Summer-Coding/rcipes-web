@@ -9,10 +9,10 @@ import {
   Container,
   Spinner,
 } from 'reactstrap';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import FormField from '../Form/Field';
 import './login.css';
-import { toast } from 'react-toastify';
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
