@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Formik } from 'formik';
-import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Container,
-  Spinner,
-} from 'reactstrap';
+import { Card, CardBody, CardHeader, Container } from 'reactstrap';
+import { Field, Submit } from 'formik-strap';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
-import FormField from '../Form/Field';
 import './login.css';
 
 const schema = yup.object().shape({
@@ -23,11 +16,8 @@ const baseUrl = process.env.REACT_APP_API_URL;
 
 const Login = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
 
   const login = async (email) => {
-    setIsProcessing(true);
-
     try {
       await axios.post(`${baseUrl}/auth/login`, {
         email,
@@ -36,8 +26,6 @@ const Login = () => {
     } catch {
       toast.error('Could not sign in user. Please try again');
     }
-
-    setIsProcessing(false);
   };
 
   return (
@@ -59,25 +47,8 @@ const Login = () => {
                 }}
               >
                 <Form>
-                  <FormField name="email" disabled={isProcessing} required />
-                  <Button
-                    type="submit"
-                    color="success"
-                    disabled={isSubmitted || isProcessing}
-                  >
-                    {isProcessing ? (
-                      <>
-                        <span>Loading...</span>
-                        <Spinner
-                          className="button-spinner"
-                          color="light"
-                          size="sm"
-                        />
-                      </>
-                    ) : (
-                      <>Send magic link</>
-                    )}
-                  </Button>
+                  <Field name="email" withLoading required />
+                  <Submit withSpinner>Send Magic Link</Submit>
                 </Form>
               </Formik>
             </Container>
