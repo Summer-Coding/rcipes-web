@@ -1,16 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Formik } from 'formik';
-import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Container,
-  Spinner,
-} from 'reactstrap';
+import { Card, CardBody, CardHeader, Container } from 'reactstrap';
+import { Field, Submit } from 'formik-strap';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
-import FormField from '../../Form/Field';
 import { supabase } from '../../../lib/supabaseClient.ts';
 import './passwordManager.css';
 
@@ -19,10 +12,7 @@ const schema = yup.object().shape({
 });
 
 const PasswordManager = () => {
-  const [isProcessing, setIsProcessing] = useState(false);
-
   const handleSubmit = async (password) => {
-    setIsProcessing(true);
     const { error } = await supabase.auth.update({
       password,
     });
@@ -39,7 +29,6 @@ const PasswordManager = () => {
         toastId: 'password-success',
       });
     }
-    setIsProcessing(false);
   };
 
   return (
@@ -59,26 +48,8 @@ const PasswordManager = () => {
               }}
             >
               <Form>
-                <FormField
-                  name="password"
-                  type="password"
-                  disabled={isProcessing}
-                  required
-                />
-                <Button type="submit" color="success" disabled={isProcessing}>
-                  {isProcessing ? (
-                    <>
-                      <span>Loading...</span>
-                      <Spinner
-                        className="button-spinner"
-                        color="light"
-                        size="sm"
-                      />
-                    </>
-                  ) : (
-                    <>Submit</>
-                  )}
-                </Button>
+                <Field name="password" type="password" withLoading required />
+                <Submit withSpinner>Submit</Submit>
               </Form>
             </Formik>
           </Container>

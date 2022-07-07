@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import { Button, Spinner } from 'reactstrap';
-import FormField from '../Form/Field';
+import { Field, Submit } from 'formik-strap';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { useAxiosPrivate } from '../../lib/useAxiosPrivate';
@@ -65,8 +65,8 @@ const Profile = () => {
         },
       );
     } finally {
-      setIsProcessing(false);
       setProcessingButton(null);
+      setIsProcessing(false);
     }
   };
 
@@ -107,45 +107,30 @@ const Profile = () => {
           onSubmit={async (values) => {
             await handleSubmit(values);
           }}
-          onReset={async (_, { resetForm }) => {
-            resetForm();
-            await handleLoadData();
-          }}
         >
           <Form>
-            <FormField name="username" disabled={isProcessing} required />
-            <FormField
+            <Field name="username" disabled={isProcessing} required />
+            <Field
               name="firstName"
               labelText="First Name"
-              disabled={isProcessing}
+              withLoading
               required
             />
-            <FormField
-              name="lastName"
-              labelText="Last Name"
-              disabled={isProcessing}
-              required
-            />
-            <Button type="submit" color="success" disabled={isProcessing}>
-              {isProcessing && processingButton === 'submit' ? (
-                <>
-                  <span>Loading...</span>
-                  <Spinner className="button-spinner" color="light" size="sm" />
-                </>
-              ) : (
-                <>Submit</>
-              )}
-            </Button>
+            <Field name="lastName" labelText="Last Name" withLoading required />
+            <Submit withSpinner color="success">
+              Submit
+            </Submit>
             <Button
-              type="reset"
+              type="button"
               color="warning"
               disabled={isProcessing}
               className="mx-3"
+              onClick={() => handleLoadData()}
             >
               {isProcessing && processingButton === 'reset' ? (
                 <>
-                  <span>Loading...</span>
                   <Spinner className="button-spinner" color="light" size="sm" />
+                  <span className="ms-2">Loading...</span>
                 </>
               ) : (
                 <>Reset</>
@@ -159,8 +144,8 @@ const Profile = () => {
             >
               {isProcessing && processingButton === 'delete' ? (
                 <>
-                  <span>Loading...</span>
                   <Spinner className="button-spinner" color="light" size="sm" />
+                  <span className="ms-2">Loading...</span>
                 </>
               ) : (
                 <>Delete</>
