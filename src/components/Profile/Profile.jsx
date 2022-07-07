@@ -101,7 +101,7 @@ const Profile = () => {
           initialValues={{
             username: profile?.username ?? '',
             firstName: profile?.firstName ?? '',
-            lastName: profile.lastName ?? '',
+            lastName: profile?.lastName ?? '',
           }}
           validationSchema={schema}
           onSubmit={async (values) => {
