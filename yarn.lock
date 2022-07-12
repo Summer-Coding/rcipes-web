@@ -4663,10 +4663,10 @@ form-data@^4.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-formik-strap@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/formik-strap/-/formik-strap-0.0.3.tgz#37dbb05712395dfbaaefac5e67c13f765ade3959"
-  integrity sha512-6mkhw8pBx/5ZF0KKmhTN1hkOb8hdsyLwZQXd1JRDWM7sIREjc6NMGjVUcjjyH5/1CX5Ujm8ZH85r3trsnVi8hg==
+formik-strap@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/formik-strap/-/formik-strap-0.0.5.tgz#229c99c907572c5f0d0926c1e801c415c819cf23"
+  integrity sha512-Ytw9SWR8ZcDZPhiJu3rOpGZ4ikGgIW/CFbfaKjKvyhssjPgn0codYHuOZm5TUEiezXd1Lw7ncYR+lw8BOXJoww==
 
 formik@^2.2.9:
   version "2.2.9"
